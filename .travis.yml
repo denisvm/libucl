@@ -10,6 +10,12 @@ before_script:
 
 before_install:
   - gem install coveralls-lcov
+  - python2.6 -V
+  - python2.7 -V
+  - python3.2 -V
+  - python3.3 -V
+  - python3.4 -V
+  - python3.5 -V
 
 script:
   - ./autogen.sh && ./configure --enable-urls --enable-coverage && make && make clean clean-coverage coverage-lcov
