@@ -1,0 +1,26 @@
+language: python
+
+python:
+  - "2.6"
+  - "2.7"
+  - "3.2"
+  - "3.3"
+  - "3.4"
+  - "3.5"
+  - "pypy"
+
+before_install:
+  - sudo apt-get update -qq
+  - sudo apt-get install -qq autoconf libcurl4-openssl-dev automake libtool lcov
+  - pip install coveralls
+
+install:
+  - cd .. && ./autogen.sh && ./configure --enable-urls && make all install DESTDIR=python
+  - cd python && python setup.py build_ext --inplace
+  - cd python && pip install -e .
+
+script:
+  - cd python && coverage run --source=clang python test_uclmodule.py
+
+after_success:
+  - coveralls
